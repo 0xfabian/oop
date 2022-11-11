@@ -11,22 +11,22 @@ int main()
 
     Market market;
 
-    User bozo(1, "bozo", 200, &market);
-    User claut(2, "claut", 1300, &market);
+    User u1(1, "u1", 200, &market);
+    User u2(2, "u2", 1300, &market);
 
-    bozo.add(ak, 0.5f, 34);
-    bozo.add(awp, 0.07f, 1);
-    claut.add(tec, 0.99f, 69);
+    u1.add(ak, 0.5f, 34);
+    u1.add(awp, 0.07f, 1);
+    u2.add(tec, 0.99f, 69);
 
-    vector<Item*> res = bozo.find("AWP");
+    vector<Item*> res = u1.find("AWP");
 
     if (!res.empty())
-        bozo.sell(res[0], 35);
+        u1.sell(res[0], 35);
 
     cout << market << endl;
 
     vector<MarketEntry*> res2 = market.find("AWP");
 
     if (!res2.empty())
-        claut.buy(res2[0]);
+        u2.buy(res2[0]);
 }
