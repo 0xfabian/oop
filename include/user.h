@@ -7,9 +7,6 @@
 
 #include "item.h"
 
-class MarketEntry;
-class Market;
-
 class User
 {
     int id;

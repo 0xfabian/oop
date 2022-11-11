@@ -3,23 +3,7 @@
 #include <iostream>
 #include <list>
 #include <vector>
-
-#include "item.h"
-
-class MarketEntry
-{
-    Item* item;
-    int price;
-
-public:
-
-    MarketEntry(Item* _item, int _price);
-
-    Item* get_item() const;
-    int get_price() const;
-
-    friend std::ostream& operator <<(std::ostream& os, const MarketEntry& entry);
-};
+#include "market_entry.h"
 
 class Market
 {

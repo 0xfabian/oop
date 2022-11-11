@@ -1,5 +1,7 @@
 #include "item.h"
 
+class User;
+
 Item::Item(std::string _name, float _wear, int _pattern)
 {
     owner = nullptr;

@@ -3,8 +3,6 @@
 #include <iostream>
 #include <string>
 
-class User;
-
 class Item
 {
     User* owner;
