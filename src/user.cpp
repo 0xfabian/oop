@@ -91,7 +91,7 @@ void User::show_inv()
     {
         std::cout << name << ":\n";
 
-        for (auto& item : inv)
+        for (auto* const item : inv)
             std::cout << "    " << *item << "\n";
     }
 }

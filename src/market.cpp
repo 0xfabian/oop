@@ -57,7 +57,7 @@ std::ostream& operator <<(std::ostream& os, const Market& market)
 
     os << "Market:\n";
 
-    for (auto& entry : market.entries)
+    for (auto* const entry : market.entries)
         os << "    " << *entry << "\n";
 
     return os;
