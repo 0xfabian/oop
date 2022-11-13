@@ -2,7 +2,7 @@
 
 class User;
 
-Item::Item(const std::string _name, float _wear, int _pattern)
+Item::Item(const std::string& _name, float _wear, int _pattern)
 {
     owner = nullptr;
     name = _name;

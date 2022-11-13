@@ -18,7 +18,7 @@ public:
     void list_item(Item* item, int price);
     bool do_transaction(User* buyer, MarketEntry* entry);
 
-    std::vector<MarketEntry*> find(const std::string item_name);
+    std::vector<MarketEntry*> find(const std::string& item_name);
 
     friend std::ostream& operator <<(std::ostream& os, const Market& market);
 

@@ -1,7 +1,7 @@
 #include "user.h"
 #include "market.h"
 
-User::User(int _id, const std::string _name, int _balance, Market* _market)
+User::User(int _id, const std::string& _name, int _balance, Market* _market)
 {
     id = _id;
     name = _name;
@@ -62,11 +62,11 @@ void User::remove(Item* item)
     inv.remove(item);
 }
 
-std::vector<Item*> User::find(const std::string item_name)
+std::vector<Item*> User::find(const std::string& item_name)
 {
     std::vector<Item*> result;
 
-    for (auto& item : inv)
+    for (auto* const item : inv)
         if (item->get_name() == item_name)
             result.push_back(item);
 
