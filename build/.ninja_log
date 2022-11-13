@@ -1,7 +1,0 @@
-# ninja log v5
-451	571	6900837192827982	oop.exe	3e4eeb75c3547e19
-7	398	6900837191118027	CMakeFiles/oop.dir/src/main.cpp.obj	c0aeb0aba9017621
-16	308	6900837190217980	CMakeFiles/oop.dir/src/item.cpp.obj	e641ee7ea3ec2014
-11	331	6900837190458008	CMakeFiles/oop.dir/src/market_entry.cpp.obj	574a4dc97a31906c
-9	451	6900837191658001	CMakeFiles/oop.dir/src/market.cpp.obj	f12b31cec0574614
-14	444	6900837191588011	CMakeFiles/oop.dir/src/user.cpp.obj	6f05fd2463b4883f
