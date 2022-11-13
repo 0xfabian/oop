@@ -33,12 +33,12 @@ bool Market::do_transaction(User* buyer, MarketEntry* entry)
     return true;
 }
 
-std::vector<MarketEntry*> Market::find(std::string name)
+std::vector<MarketEntry*> Market::find(const std::string item_name)
 {
     std::vector<MarketEntry*> result;
 
     for (auto& entry : entries)
-        if (entry->get_item()->get_name() == name)
+        if (entry->get_item()->get_name() == item_name)
             result.push_back(entry);
 
     return result;

@@ -22,7 +22,7 @@ class User
 
 public:
 
-    User(int _id, std::string _name, int _balance, Market* _market);
+    User(int _id, const std::string _name, int _balance, Market* _market);
     User(const User& user) = delete;
     User& operator=(const User& user) = delete;
 
@@ -37,7 +37,7 @@ public:
     void add(Item* item);
     void remove(Item* item);
 
-    std::vector<Item*> find(std::string name);
+    std::vector<Item*> find(const std::string item_name);
 
     bool buy(MarketEntry* entry);
     void sell(Item* item, int price);

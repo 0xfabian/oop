@@ -15,7 +15,7 @@ class Item
 
 public:
 
-    Item(std::string _name, float _wear = 0, int _pattern = 0);
+    Item(const std::string _name, float _wear = 0, int _pattern = 0);
     Item(const Item& item);
     Item& operator=(const Item& item);
 
