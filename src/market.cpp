@@ -30,6 +30,8 @@ bool Market::do_transaction(User* buyer, MarketEntry* entry)
 
     entries.remove(entry);
 
+    delete entry;
+
     return true;
 }
 
