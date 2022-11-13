@@ -9,10 +9,10 @@ int main()
     Item awp("AWP");
     Item tec("Tec-9");
 
-    Market market;
+    Market* market = new Market();
 
-    User u1(1, "u1", 200, &market);
-    User u2(2, "u2", 1300, &market);
+    User u1(1, "u1", 200, market);
+    User u2(2, "u2", 1300, market);
 
     u1.add(ak, 0.5f, 34);
     u1.add(awp, 0.07f, 1);
@@ -23,10 +23,12 @@ int main()
     if (!res.empty())
         u1.sell(res[0], 35);
 
-    cout << market << endl;
+    cout << *market << endl;
 
-    vector<MarketEntry*> res2 = market.find("AWP");
+    vector<MarketEntry*> res2 = market->find("AWP");
 
     if (!res2.empty())
         u2.buy(res2[0]);
+
+    delete market;
 }
