@@ -1,13 +1,8 @@
 #include "user.h"
 #include "market.h"
 
-User::User(int _id, const std::string& _name, int _balance, Market* _market)
+User::User(int _id, const std::string& _name, int _balance, Market* _market) : id(_id), name(_name), balance(_balance), market(_market)
 {
-    id = _id;
-    name = _name;
-    balance = _balance;
-    market = _market;
-
     std::cout << "User '" << name << "' has been added\n\n";
 }
 

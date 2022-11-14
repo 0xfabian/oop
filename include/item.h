@@ -15,8 +15,8 @@ class Item
 
 public:
 
-    explicit Item(const std::string& _name, float _wear = 0, int _pattern = 0);
-    Item(const Item& item);
+    explicit Item(const std::string& _name, float _wear = 0, int _pattern = 0) : owner(nullptr), name(_name), wear(_wear), pattern(_pattern) {}
+    Item(const Item& item) : owner(item.owner), name(item.name), wear(item.wear), pattern(item.pattern) {}
     Item& operator=(const Item& item);
 
     User* get_owner();

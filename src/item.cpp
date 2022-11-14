@@ -2,22 +2,6 @@
 
 class User;
 
-Item::Item(const std::string& _name, float _wear, int _pattern)
-{
-    owner = nullptr;
-    name = _name;
-    wear = _wear;
-    pattern = _pattern;
-}
-
-Item::Item(const Item& item)
-{
-    owner = item.owner;
-    name = item.name;
-    wear = item.wear;
-    pattern = item.pattern;
-}
-
 Item& Item::operator=(const Item& item)
 {
     this->owner = item.owner;
