@@ -43,7 +43,7 @@ endif()
 include_directories(include)
 
 # NOTE: update executable name in .github/workflows/cmake.yml when changing name here
-add_executable(${PROJECT_NAME} src/main.cpp src/market.cpp src/market_entry.cpp src/user.cpp src/item.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/market.cpp src/market_entry.cpp src/user.cpp src/item.cpp src/app.cpp)
 
 ###############################################################################
 
