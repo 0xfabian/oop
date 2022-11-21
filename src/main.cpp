@@ -96,10 +96,13 @@ int main()
             }
             else if (arg[0] == "item")
             {
-                bool failed = false;
+                bool failed;
 
                 if (arg.size() == 1)
+                {
                     app.print_items();
+                    failed = false;
+                }
                 else if (arg.size() == 2)
                     failed = true;
                 else
@@ -108,6 +111,8 @@ int main()
                     {
                         for (int i = 2; i < (int)arg.size(); i++)
                             app.add_item(arg[i]);
+
+                        failed = false;
                     }
                     else if (arg[1] == "give")
                     {
@@ -115,6 +120,8 @@ int main()
                             failed = true;
 
                         app.give_item(arg[2], arg[3]);
+
+                        failed = false;
                     }
                     else
                         failed = true;
