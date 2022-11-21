@@ -63,7 +63,10 @@ int main()
 
         cout << "> ";
 
-        getline(cin, input);
+        auto& is = getline(cin, input);
+
+        if (is.eof())
+            break;
 
         arg = parse(input);
 

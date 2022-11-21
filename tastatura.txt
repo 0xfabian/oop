@@ -11,7 +11,7 @@ users
 item give user1 "AK-47"
 item give user1 "AWP"
 item give user2 "AWP"
-item give user2 "Famas"
+item give user2 "FAMAS"
 
 login user1
 inv
@@ -28,4 +28,3 @@ logout
 
 login user1
 inv
-
