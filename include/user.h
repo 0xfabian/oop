@@ -22,8 +22,7 @@ class User
 
 public:
 
-    User(int _id, const std::string& _name, int _balance, Market* _market);
-    User(const User& user) = delete;
+    User(int _id, const std::string& _name, int _balance, Market* _market) : id(_id), name(_name), balance(_balance), market(_market) {};
     User& operator=(const User& user) = delete;
 
     std::string get_name();

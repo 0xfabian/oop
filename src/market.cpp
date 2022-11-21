@@ -6,8 +6,6 @@ void Market::list_item(Item* item, int price)
     MarketEntry* me = new MarketEntry(item, price);
 
     entries.push_back(me);
-
-    std::cout << item->get_owner()->get_name() << " listed " << item->get_name() << " for " << price << "$\n\n";
 }
 
 bool Market::do_transaction(User* buyer, MarketEntry* entry)
@@ -19,8 +17,6 @@ bool Market::do_transaction(User* buyer, MarketEntry* entry)
 
     Item* item = entry->get_item();
     User* seller = item->get_owner();
-
-    std::cout << buyer->get_name() << " bought " << item->get_name() << " from " << seller->get_name() << " for " << price << "$\n\n";
 
     seller->add_balance(price);
     buyer->add_balance(-price);
@@ -37,10 +33,12 @@ bool Market::do_transaction(User* buyer, MarketEntry* entry)
 
 std::vector<MarketEntry*> Market::find(const std::string& item_name)
 {
+    bool find_all = (item_name == "");
+
     std::vector<MarketEntry*> result;
 
     for (auto* const entry : entries)
-        if (entry->get_item()->get_name() == item_name)
+        if (find_all || entry->get_item()->get_name() == item_name)
             result.push_back(entry);
 
     return result;

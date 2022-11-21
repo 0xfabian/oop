@@ -49,7 +49,7 @@ void Item::set_pattern(int _pattern)
 
 std::ostream& operator <<(std::ostream& os, const Item& item)
 {
-    os << item.name << ", " << item.wear << ", " << item.pattern;
+    os << item.name << " " << item.wear << " " << item.pattern;
 
     return os;
 }

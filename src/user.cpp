@@ -1,11 +1,6 @@
 #include "user.h"
 #include "market.h"
 
-User::User(int _id, const std::string& _name, int _balance, Market* _market) : id(_id), name(_name), balance(_balance), market(_market)
-{
-    std::cout << "User '" << name << "' has been added\n\n";
-}
-
 std::string User::get_name()
 {
     return name;
@@ -48,8 +43,6 @@ void User::add(Item* item)
     item->set_owner(this);
 
     inv.push_back(item);
-
-    std::cout << name << " recieved " << item->get_name() << "\n\n";
 }
 
 void User::remove(Item* item)
@@ -59,10 +52,12 @@ void User::remove(Item* item)
 
 std::vector<Item*> User::find(const std::string& item_name)
 {
+    bool find_all = (item_name == "");
+
     std::vector<Item*> result;
 
     for (auto* const item : inv)
-        if (item->get_name() == item_name)
+        if (find_all || item->get_name() == item_name)
             result.push_back(item);
 
     return result;
@@ -93,7 +88,7 @@ void User::show_inv()
 
 std::ostream& operator <<(std::ostream& os, const User& user)
 {
-    os << user.id << ", " << user.name << ", " << user.balance << "$";
+    os << user.id << " " << user.name << " " << user.balance << "$";
 
     return os;
 }
