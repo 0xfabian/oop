@@ -28,7 +28,7 @@ public:
     std::string get_name();
 
     int get_balance();
-    void set_balance(int amout);
+    //void set_balance(int amout);
     void add_balance(int amout);
 
     void add(const Item& item);
@@ -41,7 +41,7 @@ public:
     bool buy(MarketEntry* entry);
     void sell(Item* item, int price);
 
-    void show_inv();
+    //void show_inv();
 
     friend std::ostream& operator <<(std::ostream& os, const User& user);
 

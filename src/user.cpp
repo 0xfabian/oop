@@ -11,10 +11,10 @@ int User::get_balance()
     return balance;
 }
 
-void User::set_balance(int amout)
+/*void User::set_balance(int amout)
 {
     balance = amout;
-}
+}*/
 
 void User::add_balance(int amout)
 {
@@ -73,7 +73,7 @@ void User::sell(Item* item, int price)
     market->list_item(item, price);
 }
 
-void User::show_inv()
+/*void User::show_inv()
 {
     if (inv.empty())
         std::cout << name << " has no items\n";
@@ -84,7 +84,7 @@ void User::show_inv()
         for (auto* const item : inv)
             std::cout << "    " << *item << "\n";
     }
-}
+}*/
 
 std::ostream& operator <<(std::ostream& os, const User& user)
 {

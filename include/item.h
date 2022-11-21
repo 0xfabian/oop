@@ -24,10 +24,10 @@ public:
 
     std::string get_name();
 
-    float get_wear();
+    //float get_wear();
     void set_wear(float _wear);
 
-    int get_pattern();
+    //int get_pattern();
     void set_pattern(int _pattern);
 
     friend std::ostream& operator <<(std::ostream& os, const Item& item);

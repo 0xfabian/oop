@@ -27,20 +27,20 @@ std::string Item::get_name()
     return name;
 }
 
-float Item::get_wear()
+/*float Item::get_wear()
 {
     return wear;
-}
+}*/
 
 void Item::set_wear(float _wear)
 {
     wear = _wear;
 }
 
-int Item::get_pattern()
+/*int Item::get_pattern()
 {
     return pattern;
-}
+}*/
 
 void Item::set_pattern(int _pattern)
 {
