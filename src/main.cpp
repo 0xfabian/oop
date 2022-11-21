@@ -106,7 +106,7 @@ int main()
                 {
                     if (arg[1] == "add")
                     {
-                        for (int i = 2; i < arg.size(); i++)
+                        for (int i = 2; i < (int)arg.size(); i++)
                             app.add_item(arg[i]);
                     }
                     else if (arg[1] == "give")
@@ -143,7 +143,7 @@ int main()
                     else
                     {
                         last_command = 1;
-                        for (int i = 0; i < item_res.size(); i++)
+                        for (int i = 0; i < (int)item_res.size(); i++)
                             cout << (i + 1) << ". " << item_res[i]->get_name() << endl;
                     }
                 }
@@ -186,7 +186,7 @@ int main()
                         int id = stoi(arg[1]) - 1;
                         int price = stoi(arg[2]);
 
-                        if (id < 0 || id >= item_res.size())
+                        if (id < 0 || id >= (int)item_res.size())
                             cout << "Invalid item index\n";
                         else if (price < 0)
                             cout << "Invalid price\n";
@@ -217,7 +217,7 @@ int main()
                 {
                     last_command = 2;
 
-                    for (int i = 0; i < market_res.size(); i++)
+                    for (int i = 0; i < (int)market_res.size(); i++)
                         cout << (i + 1) << ". " << *market_res[i] << endl;
                 }
             }
@@ -232,7 +232,7 @@ int main()
                     {
                         int id = stoi(arg[1]) - 1;
 
-                        if (id < 0 || id >= market_res.size())
+                        if (id < 0 || id >= (int)market_res.size())
                             cout << "Invalid market entry index\n";
                         else
                         {
