@@ -116,7 +116,7 @@ bool App::give_item(const std::string& user, const std::string& name)
 
 void App::print_users()
 {
-    for (auto& user : users)
+    for (auto* const user : users)
         std::cout << *user << std::endl;
 }
 
