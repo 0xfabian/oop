@@ -40,7 +40,7 @@ bool App::register_user(const std::string& username)
 
 bool App::login(const std::string& username)
 {
-    for (int i = 0; i < users.size(); i++)
+    for (int i = 0; i < (int)users.size(); i++)
     {
         if (users[i]->get_name() == username)
         {
