@@ -12,7 +12,7 @@ class App
     std::vector<User*> users;
     Market market;
 
-    int active_user;
+    User* active_user;
 
 public:
 

@@ -2,17 +2,17 @@
 
 App::App()
 {
-    active_user = -1;
+    active_user = nullptr;
 }
 
 bool App::is_active_user()
 {
-    return active_user != -1;
+    return active_user != nullptr;
 }
 
 User& App::get_active_user()
 {
-    return *users[active_user];
+    return *active_user;
 }
 
 Market& App::get_market()
@@ -40,11 +40,11 @@ bool App::register_user(const std::string& username)
 
 bool App::login(const std::string& username)
 {
-    for (int i = 0; i < (int)users.size(); i++)
+    for (auto* const user : users)
     {
-        if (users[i]->get_name() == username)
+        if (user->get_name() == username)
         {
-            active_user = i;
+            active_user = user;
             return true;
         }
     }
@@ -55,7 +55,7 @@ bool App::login(const std::string& username)
 
 void App::logout()
 {
-    active_user = -1;
+    active_user = nullptr;
 }
 
 bool App::add_item(const std::string& name)

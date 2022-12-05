@@ -1,3 +1,4 @@
+#include "ext/include/rlutil.h"
 #include "app.h"
 
 using namespace std;
@@ -44,8 +45,28 @@ vector<string> parse(const string& input)
     return ret;
 }
 
+void print_error(const string& str)
+{
+    rlutil::setColor(rlutil::LIGHTRED);
+    cout << "error: ";
+
+    rlutil::resetColor();
+    cout << str << endl;
+}
+
+void print_use(const string& str)
+{
+    rlutil::setColor(rlutil::YELLOW);
+    cout << "use: ";
+
+    rlutil::resetColor();
+    cout << str << endl;
+}
+
 int main()
 {
+    rlutil::saveDefaultColor();
+
     App app;
 
     string input;
@@ -80,14 +101,14 @@ int main()
                 if (arg.size() == 2)
                     app.register_user(arg[1]);
                 else
-                    cout << "use: " << arg[0] << " username\n";
+                    print_use(arg[0] + " username");
             }
             else if (arg[0] == "login")
             {
                 if (arg.size() == 2)
                     app.login(arg[1]);
                 else
-                    cout << "use: " << arg[0] << " username\n";
+                    print_use(arg[0] + " username");
             }
             else if (arg[0] == "logout")
             {
@@ -134,11 +155,7 @@ int main()
                 }
 
                 if (failed)
-                {
-                    cout << "use: item\n";
-                    cout << "     item add name\n";
-                    cout << "     item give user name\n";
-                }
+                    print_use("item\n     item add name\n     item give user name");
             }
             else if (arg[0] == "inventory" || arg[0] == "inv")
             {
@@ -174,15 +191,12 @@ int main()
                         int amount = stoi(arg[2]);
 
                         if (amount < 1)
-                            cout << "Invalid amount\n";
+                            print_error("invalid amount");
                         else
                             app.get_active_user().add_balance(amount);
                     }
                     else
-                    {
-                        cout << "use: " << arg[0] << endl;
-                        cout << "     " << arg[0] << " add amount\n";
-                    }
+                        print_use(arg[0] + "\n     " + arg[0] + " add amount");
                 }
                 else
                     cout << "You need to login\n";
@@ -200,9 +214,9 @@ int main()
                         int price = stoi(arg[2]);
 
                         if (id < 0 || id >= (int)item_res.size())
-                            cout << "Invalid item index\n";
+                            print_error("invalid index");
                         else if (price < 0)
-                            cout << "Invalid price\n";
+                            print_error("invalid price");
                         else
                         {
                             Item* ip = item_res[id];
@@ -213,7 +227,7 @@ int main()
                         cout << "Use inventory command before sell\n";
                 }
                 else
-                    cout << "use: sell id price\n";
+                    print_use("sell id price");
             }
             else if (arg[0] == "market" || arg[0] == "m")
             {
@@ -246,7 +260,7 @@ int main()
                         int id = stoi(arg[1]) - 1;
 
                         if (id < 0 || id >= (int)market_res.size())
-                            cout << "Invalid market entry index\n";
+                            print_error("invalid index");
                         else
                         {
                             MarketEntry* entry = market_res[id];
@@ -259,8 +273,12 @@ int main()
                         cout << "Use market command before buy\n";
                 }
                 else
-                    cout << "use: buy id\n";
+                    print_use("buy id");
             }
+            else if (arg[0] == "clear")
+                rlutil::cls();
+            else if (arg[0] == "quit" || arg[0] == "q")
+                break;
             else
                 cout << "Unknown command\n";
         }
