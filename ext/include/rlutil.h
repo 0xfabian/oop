@@ -717,7 +717,15 @@ namespace rlutil {
         getch();
     }
 
-    RLUTIL_INLINE void setConsoleTitle(RLUTIL_STRING_T title) {
+    RLUTIL_INLINE void setConsoleTitle
+    (
+#ifdef __cplusplus
+        const RLUTIL_STRING_T &
+#else
+        RLUTIL_STRING_T
+#endif
+        title
+    ) {
         const char* true_title =
 #ifdef __cplusplus
             title.c_str();
@@ -745,5 +753,5 @@ namespace rlutil {
         ~CursorHider() { showcursor(); }
     };
 
-    } // namespace rlutil
+} // namespace rlutil
 #endif
