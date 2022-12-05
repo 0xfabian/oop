@@ -1,4 +1,4 @@
-#include "ext/include/rlutil.h"
+#include "rlutil.h"
 #include "app.h"
 
 using namespace std;

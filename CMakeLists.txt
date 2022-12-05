@@ -40,10 +40,10 @@ endif()
 
 ###############################################################################
 
-include_directories(include)
+include_directories(include ext/include)
 
 # NOTE: update executable name in .github/workflows/cmake.yml when changing name here
-add_executable(${PROJECT_NAME} src/main.cpp src/market.cpp src/market_entry.cpp src/user.cpp src/item.cpp src/app.cpp ext/include/rlutil.h)
+add_executable(${PROJECT_NAME} src/main.cpp src/market.cpp src/market_entry.cpp src/user.cpp src/item.cpp src/app.cpp)
 
 ###############################################################################
 
