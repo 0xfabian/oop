@@ -14,6 +14,7 @@ public:
 
     Item* get_item() const;
     int get_price() const;
+    void set_price(int new_price);
 
     friend std::ostream& operator <<(std::ostream& os, const MarketEntry& entry);
 };

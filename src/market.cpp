@@ -3,6 +3,13 @@
 
 void Market::list_item(Item* item, int price)
 {
+    for (const auto& entry : entries)
+        if (entry->get_item() == item)
+        {
+            entry->set_price(price);
+            return;
+        }
+
     MarketEntry* me = new MarketEntry(item, price);
 
     entries.push_back(me);

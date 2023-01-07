@@ -31,7 +31,7 @@ bool App::register_user(const std::string& username)
         }
     }
 
-    User* up = new User(users.size(), username, 0, &market);
+    User* up = new User(username, 0, &market);
 
     users.push_back(up);
 
@@ -64,7 +64,7 @@ bool App::add_item(const std::string& name)
     {
         if (item.get_name() == name)
         {
-            std::cout << "Item already exists\n";
+            std::cout << "Item '" << name << "' already exists\n";
             return false;
         }
     }

@@ -12,7 +12,8 @@ class MarketEntry;
 
 class User
 {
-    int id;
+    static int id_max;
+    const int id;
     std::string name;
 
     int balance;
@@ -22,7 +23,8 @@ class User
 
 public:
 
-    User(int _id, const std::string& _name, int _balance, Market* _market) : id(_id), name(_name), balance(_balance), market(_market) {};
+    User(const std::string& _name, int _balance, Market* _market): id(id_max++), name(_name), balance(_balance), market(_market) {};
+    User(const User& user) = delete;
     User& operator=(const User& user) = delete;
 
     std::string get_name();

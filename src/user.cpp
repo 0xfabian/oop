@@ -1,6 +1,8 @@
 #include "user.h"
 #include "market.h"
 
+int User::id_max = 0;
+
 std::string User::get_name()
 {
     return name;

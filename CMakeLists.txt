@@ -40,7 +40,7 @@ endif()
 
 ###############################################################################
 
-include_directories(include ext/include)
+include_directories(include)
 
 # NOTE: update executable name in .github/workflows/cmake.yml when changing name here
 add_executable(${PROJECT_NAME} src/main.cpp src/market.cpp src/market_entry.cpp src/user.cpp src/item.cpp src/app.cpp)
@@ -115,7 +115,7 @@ endif()
 ###############################################################################
 
 # use SYSTEM so clang-tidy does not report warnings from these directories
-#target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
+target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/include)
 #target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${<SomeLib>_SOURCE_DIR}/include)
 #target_link_directories(${PROJECT_NAME} PRIVATE ${<SomeLib>_BINARY_DIR}/lib)
 #target_link_libraries(${PROJECT_NAME} <SomeLib>)
