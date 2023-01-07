@@ -47,7 +47,7 @@ void cmd_login(App* app, const vector<string>& args)
         print_use(args[0] + " username");
 }
 
-void cmd_logout(App* app, const vector<string>& args)
+void cmd_logout(App* app, const vector<string>&)
 {
     if (app->is_active_user())
     {
@@ -60,7 +60,7 @@ void cmd_logout(App* app, const vector<string>& args)
         cout << "Already logged out\n";
 }
 
-void cmd_users(App* app, const vector<string>& args)
+void cmd_users(App* app, const vector<string>&)
 {
     app->print_users();
 }
@@ -227,12 +227,12 @@ void cmd_buy(App* app, const vector<string>& args)
         print_use("buy id");
 }
 
-void cmd_clear(App* app, const vector<string>& args)
+void cmd_clear(App*, const vector<string>&)
 {
     rlutil::cls();
 }
 
-void cmd_quit(App* app, const vector<string>& args)
+void cmd_quit(App*, const vector<string>&)
 {
     Console::get_instance().quit();
 }
