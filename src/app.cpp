@@ -40,7 +40,7 @@ void App::logout()
 
 bool App::add_item(const std::string& name)
 {
-    for (auto& item : items)
+    for (const auto& item : items)
     {
         if (item.get_name() == name)
         {
@@ -102,7 +102,7 @@ void App::print_users()
 
 void App::print_items()
 {
-    for (auto& item : items)
+    for (const auto& item : items)
         std::cout << item.get_name() << std::endl;
 }
 
