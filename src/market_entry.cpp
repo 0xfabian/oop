@@ -7,21 +7,6 @@ MarketEntry::MarketEntry(Item* _item, int _price)
     price = _price;
 }
 
-Item* MarketEntry::get_item() const
-{
-    return item;
-}
-
-int MarketEntry::get_price() const
-{
-    return price;
-}
-
-void MarketEntry::set_price(int new_price)
-{
-    price = new_price;
-}
-
 std::ostream& operator <<(std::ostream& os, const MarketEntry& entry)
 {
     Item* ip = entry.get_item();

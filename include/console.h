@@ -31,11 +31,11 @@ public:
     void run();
     void quit() { _quit = true; }
 
-    const std::vector<Item*>& get_item_res() { return item_res; }
+    const std::vector<Item*>& get_item_res() const { return item_res; }
     void set_item_res(const std::vector<Item*>& _item_res) { item_res = _item_res; }
     void clear_item_res() { item_res.clear(); }
 
-    const std::vector<MarketEntry*>& get_market_res() { return market_res; }
+    const std::vector<MarketEntry*>& get_market_res() const { return market_res; }
     void set_market_res(const std::vector<MarketEntry*>& _market_res) { market_res = _market_res; }
     void clear_market_res() { market_res.clear(); }
 };

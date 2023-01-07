@@ -45,7 +45,7 @@ std::vector<MarketEntry*> Market::find(const std::string& item_name)
     std::vector<MarketEntry*> result;
 
     for (auto* const entry : entries)
-        if (find_all || entry->get_item()->get_name() == item_name)
+        if (find_all || entry->get_item()->get_name().find(item_name) != std::string::npos)
             result.push_back(entry);
 
     return result;

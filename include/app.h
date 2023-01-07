@@ -12,15 +12,15 @@ class App
     std::vector<User*> users;
     Market market;
 
-    User* active_user;
+    User* active_user = nullptr;
 
 public:
 
-    App();
+    App() = default;
 
-    bool is_active_user();
-    User& get_active_user();
-    Market& get_market();
+    bool is_active_user() { return active_user != nullptr; };
+    User& get_active_user() { return *active_user; };
+    Market& get_market() { return market; };
 
     bool register_user(const std::string& username);
 

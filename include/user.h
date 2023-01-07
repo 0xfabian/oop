@@ -27,14 +27,13 @@ public:
     User(const User& user) = delete;
     User& operator=(const User& user) = delete;
 
-    std::string get_name();
+    std::string get_name() const { return name; };
 
-    int get_balance();
-    //void set_balance(int amout);
-    void add_balance(int amout);
+    int get_balance() const { return balance; };
+    //void set_balance(int amount) { balance = amount; };
+    void add_balance(int amount) { balance += amount; };
 
     void add(const Item& item);
-    void add(const Item& item, float wear, int pattern);
     void add(Item* item);
     void remove(Item* item);
 
@@ -42,8 +41,6 @@ public:
 
     bool buy(MarketEntry* entry);
     void sell(Item* item, int price);
-
-    //void show_inv();
 
     friend std::ostream& operator <<(std::ostream& os, const User& user);
 

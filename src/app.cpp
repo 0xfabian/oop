@@ -1,25 +1,5 @@
 #include "app.h"
 
-App::App()
-{
-    active_user = nullptr;
-}
-
-bool App::is_active_user()
-{
-    return active_user != nullptr;
-}
-
-User& App::get_active_user()
-{
-    return *active_user;
-}
-
-Market& App::get_market()
-{
-    return market;
-}
-
 bool App::register_user(const std::string& username)
 {
     for (auto& user : users)
@@ -69,7 +49,7 @@ bool App::add_item(const std::string& name)
         }
     }
 
-    items.push_back(Item(name));
+    items.push_back(Item(ItemType::WEAPON, name));
 
     return true;
 }

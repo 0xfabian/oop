@@ -3,39 +3,9 @@
 
 int User::id_max = 0;
 
-std::string User::get_name()
-{
-    return name;
-}
-
-int User::get_balance()
-{
-    return balance;
-}
-
-/*void User::set_balance(int amout)
-{
-    balance = amout;
-}*/
-
-void User::add_balance(int amout)
-{
-    balance += amout;
-}
-
 void User::add(const Item& item)
 {
     Item* ip = new Item(item);
-
-    add(ip);
-}
-
-void User::add(const Item& item, float wear, int pattern)
-{
-    Item* ip = new Item(item);
-
-    ip->set_wear(wear);
-    ip->set_pattern(pattern);
 
     add(ip);
 }
@@ -59,7 +29,7 @@ std::vector<Item*> User::find(const std::string& item_name)
     std::vector<Item*> result;
 
     for (auto* const item : inv)
-        if (find_all || item->get_name() == item_name)
+        if (find_all || item->get_name().find(item_name) != std::string::npos)
             result.push_back(item);
 
     return result;
@@ -74,19 +44,6 @@ void User::sell(Item* item, int price)
 {
     market->list_item(item, price);
 }
-
-/*void User::show_inv()
-{
-    if (inv.empty())
-        std::cout << name << " has no items\n";
-    else
-    {
-        std::cout << name << ":\n";
-
-        for (auto* const item : inv)
-            std::cout << "    " << *item << "\n";
-    }
-}*/
 
 std::ostream& operator <<(std::ostream& os, const User& user)
 {
