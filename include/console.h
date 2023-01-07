@@ -7,12 +7,12 @@
 
 class Console
 {
-    bool _quit;
+    bool _quit = false;
     std::string input;
     std::vector<std::string> args;
     std::unordered_map<std::string, std::function<void(App*, const std::vector<std::string>&)>> commands;
 
-    App* app;
+    App* app = nullptr;
     std::vector<Item*> item_res;
     std::vector<MarketEntry*> market_res;
 
