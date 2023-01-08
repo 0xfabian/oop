@@ -16,6 +16,7 @@ std::ostream& operator <<(std::ostream& os, Item& item)
 
 std::ostream& operator <<(std::ostream& os, Skin& skin)
 {
+    // fix unused warning
     (void)skin.weapon;
     (void)skin.wear;
     (void)skin.pattern;

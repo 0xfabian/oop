@@ -40,8 +40,8 @@ void cmd_logout(App* app, const vector<string>&)
 {
     if (app->is_active_user())
     {
-        Console::get_instance().clear_item_res();
-        Console::get_instance().clear_market_res();
+        Console::get_instance().get_item_res().clear();
+        Console::get_instance().get_market_res().clear();
 
         app->logout();
     }
