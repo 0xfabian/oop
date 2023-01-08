@@ -16,6 +16,10 @@ std::ostream& operator <<(std::ostream& os, Item& item)
 
 std::ostream& operator <<(std::ostream& os, Skin& skin)
 {
+    (void)skin.weapon;
+    (void)skin.wear;
+    (void)skin.pattern;
+
     rlutil::saveDefaultColor();
 
     switch (skin.rarity)
