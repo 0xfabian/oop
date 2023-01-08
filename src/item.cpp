@@ -1,19 +1,35 @@
 #include "item.h"
 
-class User;
-
-Item& Item::operator=(const Item& item)
+std::ostream& operator <<(std::ostream& os, Item& item)
 {
-    this->owner = item.owner;
-    this->type = item.type;
-    this->name = item.name;
+    if (item.type == ItemType::SKIN)
+    {
+        Skin& skin = dynamic_cast<Skin&>(item);
 
-    return *this;
+        os << skin;
+    }
+    else
+        os << item.name;
+
+    return os;
 }
 
-std::ostream& operator <<(std::ostream& os, const Item& item)
+std::ostream& operator <<(std::ostream& os, Skin& skin)
 {
-    os << item.name;
+    rlutil::saveDefaultColor();
+
+    switch (skin.rarity)
+    {
+    case 1: rlutil::setColor(rlutil::LIGHTBLUE); break;
+    case 2: rlutil::setColor(rlutil::MAGENTA); break;
+    case 3: rlutil::setColor(rlutil::LIGHTMAGENTA); break;
+    case 4: rlutil::setColor(rlutil::LIGHTRED); break;
+    case 5: rlutil::setColor(rlutil::YELLOW); break;
+    }
+
+    os << skin.name;
+
+    rlutil::resetColor();
 
     return os;
 }

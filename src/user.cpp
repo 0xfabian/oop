@@ -3,15 +3,11 @@
 
 int User::id_max = 0;
 
-void User::add(const Item& item)
+void User::add(Item* item, bool clone)
 {
-    Item* ip = new Item(item);
+    if (clone)
+        item = item->clone();
 
-    add(ip);
-}
-
-void User::add(Item* item)
-{
     item->set_owner(this);
 
     inv.push_back(item);
@@ -35,7 +31,7 @@ std::vector<Item*> User::find(const std::string& item_name)
     return result;
 }
 
-bool User::buy(MarketEntry* entry)
+int User::buy(MarketEntry* entry)
 {
     return market->do_transaction(this, entry);
 }

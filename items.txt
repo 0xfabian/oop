@@ -1,0 +1,14 @@
+AK-47
+AUG
+Glock-18
+USP-S
+AWP
+MAC-10
+MP9
+
+Night               Glock-18              1
+Heat                MAC-10                2
+Redline             AWP                   3
+Redline             AK-47                 3
+"Fuel Injector"     AK-47                 4
+Guardian            USP-S                 2

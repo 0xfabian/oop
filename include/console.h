@@ -44,3 +44,5 @@ std::vector<std::string> parse(const std::string& input);
 
 void print_error(const std::string& str);
 void print_use(const std::string& str);
+
+bool nxstoi(const std::string& s, int& value) noexcept;

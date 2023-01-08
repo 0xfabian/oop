@@ -3,6 +3,7 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <algorithm>
 #include "market_entry.h"
 
 class Market
@@ -16,7 +17,7 @@ public:
     Market& operator=(const Market& market) = delete;
 
     void list_item(Item* item, int price);
-    bool do_transaction(User* buyer, MarketEntry* entry);
+    int do_transaction(User* buyer, MarketEntry* entry);
 
     std::vector<MarketEntry*> find(const std::string& item_name);
 

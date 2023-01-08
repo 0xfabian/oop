@@ -1,8 +1,3 @@
-item add "AK-47" "M4A1-S" "M4A4"
-item add "FAMAS" "Galil AR"
-item add "AUG" "SG 553"
-item add "AWP"
-
 register user1
 register user2
 
@@ -11,7 +6,7 @@ users
 item give user1 "AK-47"
 item give user1 "AWP"
 item give user2 "AWP"
-item give user2 "FAMAS"
+item give user2 "USP-S"
 
 login user1
 inv

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <fstream>
 
 #include "market.h"
 #include "item.h"
@@ -8,7 +9,7 @@
 
 class App
 {
-    std::vector<Item> items;
+    std::vector<Item*> items;
     std::vector<User*> users;
     Market market;
 
@@ -27,6 +28,8 @@ public:
     bool login(const std::string& username);
     void logout();
 
+    Item* find_item(const std::string& name);
+    int load_items(const std::string& path = "items.txt");
     bool add_item(const std::string& name);
     bool give_item(const std::string& user, const std::string& name);
 

@@ -1,4 +1,5 @@
 #include "app.h"
+#include "console.h"
 
 bool App::register_user(const std::string& username)
 {
@@ -38,18 +39,75 @@ void App::logout()
     active_user = nullptr;
 }
 
-bool App::add_item(const std::string& name)
+Item* App::find_item(const std::string& name)
 {
     for (const auto& item : items)
     {
-        if (item.get_name() == name)
+        if (item->get_name() == name)
+            return item;
+    }
+
+    return nullptr;
+}
+
+int App::load_items(const std::string& path)
+{
+    int ret = 0;
+
+    std::ifstream f(path);
+
+    if (!f.is_open())
+    {
+        std::cout << "'" << path << "' was not found\n";
+        return -1;
+    }
+
+    std::string line;
+    std::vector<std::string> args;
+
+    while (getline(f, line))
+    {
+        args = parse(line);
+
+        if (!args.empty())
         {
-            std::cout << "Item '" << name << "' already exists\n";
-            return false;
+            if (args.size() == 1)
+            {
+                if (add_item(args[0]))
+                    ret++;
+            }
+            else if (args.size() == 3)
+            {
+                Item* item = find_item(args[1]);
+
+                if (item && item->get_type() == ItemType::WEAPON)
+                {
+                    Weapon* weapon = dynamic_cast<Weapon*>(item);
+
+                    if (!find_item(args[1] + " | " + args[0]))
+                    {
+                        int rarity;
+
+                        if (nxstoi(args[2], rarity))
+                        {
+                            items.push_back(new Skin(weapon, args[0], rarity));
+                            ret++;
+                        }
+                    }
+                }
+            }
         }
     }
 
-    items.push_back(Item(ItemType::WEAPON, name));
+    return ret;
+}
+
+bool App::add_item(const std::string& name)
+{
+    if (find_item(name))
+        return false;
+
+    items.push_back(new Weapon(name));
 
     return true;
 }
@@ -73,16 +131,7 @@ bool App::give_item(const std::string& user, const std::string& name)
         return false;
     }
 
-    Item* i = nullptr;
-
-    for (auto& item : items)
-    {
-        if (item.get_name() == name)
-        {
-            i = &item;
-            break;
-        }
-    }
+    Item* i = find_item(name);
 
     if (!i)
     {
@@ -90,7 +139,8 @@ bool App::give_item(const std::string& user, const std::string& name)
         return false;
     }
 
-    u->add(*i);
+    u->add(i, true);
+
     return true;
 }
 
@@ -103,11 +153,14 @@ void App::print_users()
 void App::print_items()
 {
     for (const auto& item : items)
-        std::cout << item.get_name() << std::endl;
+        std::cout << *item << std::endl;
 }
 
 App::~App()
 {
     for (auto& user : users)
         delete user;
+
+    for (auto& item : items)
+        delete item;
 }

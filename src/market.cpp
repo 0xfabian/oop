@@ -15,12 +15,15 @@ void Market::list_item(Item* item, int price)
     entries.push_back(me);
 }
 
-bool Market::do_transaction(User* buyer, MarketEntry* entry)
+int Market::do_transaction(User* buyer, MarketEntry* entry)
 {
+    if (std::find(entries.begin(), entries.end(), entry) == entries.end())
+        return 1;
+
     int price = entry->get_price();
 
     if (buyer->get_balance() < price)
-        return false;
+        return 2;
 
     Item* item = entry->get_item();
     User* seller = item->get_owner();
@@ -35,7 +38,7 @@ bool Market::do_transaction(User* buyer, MarketEntry* entry)
 
     delete entry;
 
-    return true;
+    return 0;
 }
 
 std::vector<MarketEntry*> Market::find(const std::string& item_name)

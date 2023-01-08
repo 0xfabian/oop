@@ -33,13 +33,12 @@ public:
     //void set_balance(int amount) { balance = amount; };
     void add_balance(int amount) { balance += amount; };
 
-    void add(const Item& item);
-    void add(Item* item);
+    void add(Item* item, bool clone = false);
     void remove(Item* item);
 
     std::vector<Item*> find(const std::string& item_name);
 
-    bool buy(MarketEntry* entry);
+    int buy(MarketEntry* entry);
     void sell(Item* item, int price);
 
     friend std::ostream& operator <<(std::ostream& os, const User& user);

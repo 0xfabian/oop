@@ -2,20 +2,6 @@
 
 using namespace std;
 
-bool nxstoi(string s, int& value) noexcept
-{
-    try
-    {
-        value = stoi(s);
-    }
-    catch (...)
-    {
-        return false;
-    }
-
-    return true;
-}
-
 void cmd_register(App* app, const vector<string>& args)
 {
     if (app->is_active_user())
@@ -76,10 +62,39 @@ void cmd_item(App* app, const vector<string>& args)
         failed = false;
     }
     else if (args.size() == 2)
-        failed = true;
+    {
+        if (args[1] == "load")
+        {
+            int ret = app->load_items();
+
+            if (ret >= 0)
+                cout << "Loaded " << ret << " items\n";
+
+            failed = false;
+        }
+        else
+            failed = true;
+    }
     else
     {
-        if (args[1] == "add")
+        if (args[1] == "load")
+        {
+            for (auto i = 2ull; i < args.size(); i++)
+            {
+                int ret = app->load_items(args[i]);
+
+                if (ret >= 0)
+                {
+                    if (args.size() > 3)
+                        cout << args[i] << ": ";
+
+                    cout << "loaded " << ret << " items\n";
+                }
+            }
+
+            failed = false;
+        }
+        else if (args[1] == "add")
         {
             for (auto i = 2ull; i < args.size(); i++)
                 app->add_item(args[i]);
@@ -102,7 +117,7 @@ void cmd_item(App* app, const vector<string>& args)
     }
 
     if (failed)
-        print_use("item\n     item add name ...\n     item give user name");
+        print_use("item\n     item load\n     item add name ...\n     item give user name");
 }
 
 void cmd_balance(App* app, const vector<string>& args)
@@ -124,7 +139,7 @@ void cmd_balance(App* app, const vector<string>& args)
             print_use(args[0] + "\n     " + args[0] + " add amount");
     }
     else
-        cout << "You need to login\n";
+        cout << "You need to log in frist\n";
 }
 
 void cmd_inventory(App* app, const vector<string>& args)
@@ -145,15 +160,21 @@ void cmd_inventory(App* app, const vector<string>& args)
         else
         {
             for (auto i = 0ull; i < item_res.size(); i++)
-                cout << (i + 1) << ". " << item_res[i]->get_name() << endl;
+                cout << (i + 1) << ". " << *item_res[i] << endl;
         }
     }
     else
-        cout << "You need to login\n";
+        cout << "You need to log in first\n";
 }
 
 void cmd_sell(App* app, const vector<string>& args)
 {
+    if (!app->is_active_user())
+    {
+        cout << "You need to log in first\n";
+        return;
+    }
+
     if (args.size() == 3)
     {
         const vector<Item*>& item_res = Console::get_instance().get_item_res();
@@ -189,7 +210,8 @@ void cmd_market(App* app, const vector<string>& args)
 
     vector<MarketEntry*> market_res = app->get_market().find(s);
 
-    Console::get_instance().set_market_res(market_res);
+    if (app->is_active_user())
+        Console::get_instance().set_market_res(market_res);
 
     if (market_res.empty())
         cout << "No market entries found\n";
@@ -202,6 +224,12 @@ void cmd_market(App* app, const vector<string>& args)
 
 void cmd_buy(App* app, const vector<string>& args)
 {
+    if (!app->is_active_user())
+    {
+        cout << "You need to log in first\n";
+        return;
+    }
+
     if (args.size() == 2)
     {
         const vector<MarketEntry*>& market_res = Console::get_instance().get_market_res();
@@ -216,7 +244,11 @@ void cmd_buy(App* app, const vector<string>& args)
             {
                 MarketEntry* entry = market_res[id - 1];
 
-                if (!app->get_active_user().buy(entry))
+                int ret = app->get_active_user().buy(entry);
+
+                if (ret == 1)
+                    cout << "Item already sold\n";
+                else if (ret == 2)
                     cout << "Not enough money\n";
             }
         }
@@ -277,7 +309,7 @@ void Console::run()
 
         args = parse(input);
 
-        if (args.size() > 0)
+        if (!args.empty())
         {
             if (commands.find(args[0]) != commands.end())
                 commands[args[0]](app, args);
@@ -297,7 +329,7 @@ vector<string> parse(const string& input)
 
     for (const char& c : input)
     {
-        if (c == ' ')
+        if (isspace(c))
         {
             if (in_quotes)
             {
@@ -345,4 +377,18 @@ void print_use(const string& str)
 
     rlutil::resetColor();
     cout << str << endl;
+}
+
+bool nxstoi(const string& s, int& value) noexcept
+{
+    try
+    {
+        value = stoi(s);
+    }
+    catch (...)
+    {
+        return false;
+    }
+
+    return true;
 }
