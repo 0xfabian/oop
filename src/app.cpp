@@ -59,11 +59,10 @@ int App::load_items(const std::string& path)
     }
 
     std::string line;
-    std::vector<std::string> args;
 
     while (getline(f, line))
     {
-        args = parse(line);
+        std::vector<std::string> args = parse(line);
 
         if (!args.empty())
         {
@@ -139,7 +138,7 @@ void App::print_users()
 
 void App::print_items()
 {
-    for (const auto& item : items)
+    for (auto* const item : items)
         std::cout << *item << std::endl;
 }
 

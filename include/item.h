@@ -25,7 +25,7 @@ protected:
 
 public:
 
-    explicit Item(ItemType _type, const std::string& _name): type(_type), name(_name) {}
+    Item(ItemType _type, const std::string& _name): type(_type), name(_name) {}
 
     virtual Item* clone() const = 0;
 
@@ -45,7 +45,7 @@ class Weapon: public Item
 
 public:
 
-    Weapon(const std::string& _name): Item(ItemType::WEAPON, _name) {}
+    explicit Weapon(const std::string& _name): Item(ItemType::WEAPON, _name) {}
 
     Item* clone() const override { return new Weapon(*this); }
 };
