@@ -10,9 +10,7 @@ void Market::list_item(Item* item, int price)
             return;
         }
 
-    MarketEntry* me = new MarketEntry(item, price);
-
-    entries.push_back(me);
+    entries.push_back(new MarketEntry(item, price));
 }
 
 int Market::do_transaction(User* buyer, MarketEntry* entry)

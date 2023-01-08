@@ -10,7 +10,7 @@ class MarketEntry
 
 public:
 
-    MarketEntry(Item* _item, int _price);
+    MarketEntry(Item* _item, int _price): item(_item), price(_price) {}
 
     Item* get_item() const { return item; };
     int get_price() const { return price; };

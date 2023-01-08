@@ -1,53 +1,49 @@
 #include "app.h"
 #include "console.h"
 
+User* App::get_user(const std::string& name)
+{
+    for (const auto& user : users)
+        if (user->get_name() == name)
+            return user;
+
+    return nullptr;
+}
+
+Item* App::get_item(const std::string& name)
+{
+    for (const auto& item : items)
+        if (item->get_name() == name)
+            return item;
+
+    return nullptr;
+}
+
 bool App::register_user(const std::string& username)
 {
-    for (auto& user : users)
-    {
-        if (user->get_name() == username)
-        {
-            std::cout << "User already exists\n";
-            return false;
-        }
-    }
+    if (get_user(username))
+        return false;
 
-    User* up = new User(username, 0, &market);
-
-    users.push_back(up);
+    users.push_back(new User(username, 0, &market));
 
     return true;
 }
 
 bool App::login(const std::string& username)
 {
-    for (auto* const user : users)
-    {
-        if (user->get_name() == username)
-        {
-            active_user = user;
-            return true;
-        }
-    }
+    User* user = get_user(username);
 
-    std::cout << "User does not exist\n";
-    return false;
+    if (user)
+        active_user = user;
+    else
+        std::cout << "User does not exist\n";
+
+    return user;
 }
 
 void App::logout()
 {
     active_user = nullptr;
-}
-
-Item* App::find_item(const std::string& name)
-{
-    for (const auto& item : items)
-    {
-        if (item->get_name() == name)
-            return item;
-    }
-
-    return nullptr;
 }
 
 int App::load_items(const std::string& path)
@@ -78,13 +74,13 @@ int App::load_items(const std::string& path)
             }
             else if (args.size() == 3)
             {
-                Item* item = find_item(args[1]);
+                Item* item = get_item(args[1]);
 
                 if (item && item->get_type() == ItemType::WEAPON)
                 {
                     Weapon* weapon = dynamic_cast<Weapon*>(item);
 
-                    if (!find_item(args[1] + " | " + args[0]))
+                    if (!get_item(args[1] + " | " + args[0]))
                     {
                         int rarity;
 
@@ -104,7 +100,7 @@ int App::load_items(const std::string& path)
 
 bool App::add_item(const std::string& name)
 {
-    if (find_item(name))
+    if (get_item(name))
         return false;
 
     items.push_back(new Weapon(name));
@@ -112,18 +108,9 @@ bool App::add_item(const std::string& name)
     return true;
 }
 
-bool App::give_item(const std::string& user, const std::string& name)
+bool App::give_item(const std::string& username, const std::string& name)
 {
-    User* u = nullptr;
-
-    for (auto& _user : users)
-    {
-        if (_user->get_name() == user)
-        {
-            u = _user;
-            break;
-        }
-    }
+    User* u = get_user(username);
 
     if (!u)
     {
@@ -131,7 +118,7 @@ bool App::give_item(const std::string& user, const std::string& name)
         return false;
     }
 
-    Item* i = find_item(name);
+    Item* i = get_item(name);
 
     if (!i)
     {

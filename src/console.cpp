@@ -9,7 +9,10 @@ void cmd_register(App* app, const vector<string>& args)
     else
     {
         if (args.size() == 2)
-            app->register_user(args[1]);
+        {
+            if (!app->register_user(args[1]))
+                cout << "User already exists\n";
+        }
         else
             print_use(args[0] + " username");
     }
@@ -53,14 +56,10 @@ void cmd_users(App* app, const vector<string>&)
 
 void cmd_item(App* app, const vector<string>& args)
 {
-    bool failed;
+    bool failed = false;
 
     if (args.size() == 1)
-    {
         app->print_items();
-
-        failed = false;
-    }
     else if (args.size() == 2)
     {
         if (args[1] == "load")
@@ -69,8 +68,6 @@ void cmd_item(App* app, const vector<string>& args)
 
             if (ret >= 0)
                 cout << "Loaded " << ret << " items\n";
-
-            failed = false;
         }
         else
             failed = true;
@@ -91,24 +88,16 @@ void cmd_item(App* app, const vector<string>& args)
                     cout << "loaded " << ret << " items\n";
                 }
             }
-
-            failed = false;
         }
         else if (args[1] == "add")
         {
             for (auto i = 2ull; i < args.size(); i++)
                 app->add_item(args[i]);
-
-            failed = false;
         }
         else if (args[1] == "give")
         {
             if (args.size() == 4)
-            {
                 app->give_item(args[2], args[3]);
-
-                failed = false;
-            }
             else
                 failed = true;
         }
