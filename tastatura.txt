@@ -1,3 +1,5 @@
+item load
+
 register user1
 register user2
 
