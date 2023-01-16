@@ -5,6 +5,7 @@ USP-S
 AWP
 MAC-10
 MP9
+FAMAS
 
 Night               Glock-18              1
 Heat                MAC-10                2
@@ -12,3 +13,6 @@ Redline             AWP                   3
 Redline             AK-47                 3
 "Fuel Injector"     AK-47                 4
 Guardian            USP-S                 2
+Valence             FAMAS                 2
+
+Wildfire            "Glock-18 | Night" "FAMAS | Valence" "AK-47 | Fuel Injector"

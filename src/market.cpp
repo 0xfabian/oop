@@ -3,14 +3,27 @@
 
 void Market::list_item(Item* item, int price)
 {
+    MarketEntry* entry = find(item);
+
+    if (entry)
+        entry->set_price(price);
+    else
+        entries.push_back(new MarketEntry(item, price));
+}
+
+bool Market::cancel_item(Item* item)
+{
     for (const auto& entry : entries)
         if (entry->get_item() == item)
         {
-            entry->set_price(price);
-            return;
+            entries.remove(entry);
+
+            delete entry;
+
+            return true;
         }
 
-    entries.push_back(new MarketEntry(item, price));
+    return false;
 }
 
 int Market::do_transaction(User* buyer, MarketEntry* entry)
@@ -50,6 +63,15 @@ std::vector<MarketEntry*> Market::find(const std::string& item_name)
             result.push_back(entry);
 
     return result;
+}
+
+MarketEntry* Market::find(Item* item)
+{
+    for (const auto& entry : entries)
+        if (entry->get_item() == item)
+            return entry;
+
+    return nullptr;
 }
 
 std::ostream& operator <<(std::ostream& os, const Market& market)

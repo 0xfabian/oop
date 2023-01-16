@@ -17,9 +17,11 @@ public:
     Market& operator=(const Market& market) = delete;
 
     void list_item(Item* item, int price);
+    bool cancel_item(Item* item);
     int do_transaction(User* buyer, MarketEntry* entry);
 
     std::vector<MarketEntry*> find(const std::string& item_name);
+    MarketEntry* find(Item* item);
 
     friend std::ostream& operator <<(std::ostream& os, const Market& market);
 

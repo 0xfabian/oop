@@ -258,6 +258,86 @@ void cmd_quit(App*, const vector<string>&)
     Console::get_instance().quit();
 }
 
+void cmd_open(App* app, const vector<string>& args)
+{
+    if (!app->is_active_user())
+    {
+        cout << "You need to log in first\n";
+        return;
+    }
+
+    if (args.size() == 2)
+    {
+        const vector<Item*>& item_res = Console::get_instance().get_item_res();
+
+        if (!item_res.empty())
+        {
+            int id;
+
+            if (!nxstoi(args[1], id) || id < 1 || id >(int)item_res.size())
+                print_error("invalid index");
+            else
+            {
+                Case* _case = dynamic_cast<Case*>(item_res[id - 1]);
+
+                if (!_case)
+                    cout << "You can only you open on a case\n";
+                else
+                {
+                    if (app->get_market().find(_case))
+                        cout << "Can't open case while it's listed on the market\n";
+                    else
+                    {
+                        _case->open();
+                        app->get_active_user().remove(_case);
+
+                        delete _case;
+
+                        Console::get_instance().get_item_res().clear();
+                    }
+                }
+            }
+        }
+        else
+            cout << "No result to choose from\n";
+    }
+    else
+        print_use("open id");
+}
+
+void cmd_cancel(App* app, const vector<string>& args)
+{
+    if (!app->is_active_user())
+    {
+        cout << "You need to log in first\n";
+        return;
+    }
+
+    if (args.size() == 2)
+    {
+        const vector<Item*>& item_res = Console::get_instance().get_item_res();
+
+        if (!item_res.empty())
+        {
+            int id;
+
+            if (!nxstoi(args[1], id) || id < 1 || id >(int)item_res.size())
+                print_error("invalid index");
+            else
+            {
+                Item* item = item_res[id - 1];
+
+                if (!app->get_market().cancel_item(item))
+                    cout << "Item is not listed on the market\n";
+            }
+        }
+        else
+            cout << "No result to choose from\n";
+    }
+    else
+        print_use("cancel id");
+}
+
 Console::Console()
 {
     rlutil::saveDefaultColor();
@@ -280,6 +360,8 @@ Console::Console()
     commands["clear"] = cmd_clear;
     commands["quit"] = cmd_quit;
     commands["q"] = cmd_quit;
+    commands["open"] = cmd_open;
+    commands["cancel"] = cmd_cancel;
 }
 
 void Console::run()

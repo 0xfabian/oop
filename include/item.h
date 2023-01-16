@@ -4,6 +4,7 @@
 #include <string>
 #include <rlutil.h>
 #include <vector>
+#include <cstdlib>
 
 #include "misc.h"
 
@@ -14,8 +15,7 @@ enum ItemType
 {
     WEAPON,
     SKIN,
-    CASE,
-    KEY
+    CASE
 };
 
 class Item
@@ -43,7 +43,7 @@ public:
     std::string get_name() const { return name; }
     ItemType get_type() const { return type; }
 
-    friend std::ostream& operator <<(std::ostream& os, Item& item) { item.print(os); return os; }
+    friend std::ostream& operator <<(std::ostream& os, const Item& item) { item.print(os); return os; }
 };
 
 class Weapon: public Item
@@ -80,4 +80,21 @@ public:
     Item* clone() const override { return new Skin(*this); }
 
     static Item* load(const std::string& str, App* app);
+};
+
+class Case: public Item
+{
+    std::vector<Skin*> drops;
+
+public:
+
+    Case(const std::string _name, std::vector<Skin*> _drops): Item(ItemType::CASE, _name + " Case"), drops(_drops) {}
+
+    Item* clone() const override { return new Case(*this); }
+
+    static Item* load(const std::string& str, App* app);
+
+    void print_drops(std::ostream& os) const;
+
+    void open() const;
 };

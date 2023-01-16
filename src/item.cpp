@@ -55,3 +55,42 @@ Item* Skin::load(const string& str, App* app)
 
     return nullptr;
 }
+
+Item* Case::load(const string& str, App* app)
+{
+    vector<string> args = parse(str);
+
+    if (args.size() > 3)
+    {
+        vector<Skin*> drops;
+
+        for (auto i = 1ull; i < args.size(); i++)
+        {
+            Skin* skin = dynamic_cast<Skin*>(app->get_item(args[i]));
+
+            if (!skin)
+                return nullptr;
+
+            drops.push_back(skin);
+        }
+
+        return new Case(args[0], drops);
+    }
+
+    return nullptr;
+}
+
+void Case::print_drops(ostream& os) const
+{
+    os << "{ ";
+
+    for (auto* const skin : drops)
+        os << *skin << (skin == drops.back() ? " }" : ", ");
+}
+
+void Case::open() const
+{
+    int i = rand() % drops.size();
+
+    owner->add(drops[i], true);
+}

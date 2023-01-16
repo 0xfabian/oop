@@ -78,6 +78,9 @@ bool App::add_item(const std::string& str)
     if (!item)
         item = Skin::load(str, this);
 
+    if (!item)
+        item = Case::load(str, this);
+
     add_item(item);
 
     return item;
@@ -115,7 +118,14 @@ void App::print_users()
 void App::print_items()
 {
     for (auto* const item : items)
-        std::cout << *item << std::endl;
+    {
+        std::cout << *item;
+
+        if (item->get_type() == ItemType::CASE)
+            dynamic_cast<Case*>(item)->print_drops(std::cout << " ");
+
+        std::cout << std::endl;
+    }
 }
 
 App::~App()
