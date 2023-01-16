@@ -308,48 +308,6 @@ void Console::run()
     }
 }
 
-vector<string> parse(const string& input)
-{
-    vector<string> ret;
-
-    string word;
-    bool in_word = false;
-    bool in_quotes = false;
-
-    for (const char& c : input)
-    {
-        if (isspace(c))
-        {
-            if (in_quotes)
-            {
-                in_word = true;
-                word.push_back(c);
-            }
-            else if (in_word)
-            {
-                in_word = false;
-                ret.push_back(word);
-                word.clear();
-            }
-        }
-        else
-        {
-            if (c == '"')
-                in_quotes = !in_quotes;
-            else
-            {
-                in_word = true;
-                word.push_back(c);
-            }
-        }
-    }
-
-    if (in_word)
-        ret.push_back(word);
-
-    return ret;
-}
-
 void print_error(const string& str)
 {
     rlutil::setColor(rlutil::LIGHTRED);
@@ -366,18 +324,4 @@ void print_use(const string& str)
 
     rlutil::resetColor();
     cout << str << endl;
-}
-
-bool nxstoi(const string& s, int& value) noexcept
-{
-    try
-    {
-        value = stoi(s);
-    }
-    catch (...)
-    {
-        return false;
-    }
-
-    return true;
 }

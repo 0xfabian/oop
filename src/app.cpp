@@ -1,5 +1,4 @@
 #include "app.h"
-#include "console.h"
 
 User* App::get_user(const std::string& name)
 {
@@ -48,8 +47,6 @@ void App::logout()
 
 int App::load_items(const std::string& path)
 {
-    int ret = 0;
-
     std::ifstream f(path);
 
     if (!f.is_open())
@@ -59,52 +56,31 @@ int App::load_items(const std::string& path)
     }
 
     std::string line;
+    int ret = 0;
 
     while (getline(f, line))
-    {
-        std::vector<std::string> args = parse(line);
-
-        if (!args.empty())
-        {
-            if (args.size() == 1)
-            {
-                if (add_item(args[0]))
-                    ret++;
-            }
-            else if (args.size() == 3)
-            {
-                Item* item = get_item(args[1]);
-
-                if (item && item->get_type() == ItemType::WEAPON)
-                {
-                    Weapon* weapon = dynamic_cast<Weapon*>(item);
-
-                    if (!get_item(args[1] + " | " + args[0]))
-                    {
-                        int rarity;
-
-                        if (nxstoi(args[2], rarity))
-                        {
-                            items.push_back(new Skin(weapon, args[0], rarity));
-                            ret++;
-                        }
-                    }
-                }
-            }
-        }
-    }
+        if (add_item(line))
+            ret++;
 
     return ret;
 }
 
-bool App::add_item(const std::string& name)
+void App::add_item(Item* item)
 {
-    if (get_item(name))
-        return false;
+    if (item)
+        items.push_back(item);
+}
 
-    items.push_back(new Weapon(name));
+bool App::add_item(const std::string& str)
+{
+    Item* item = Weapon::load(str, this);
 
-    return true;
+    if (!item)
+        item = Skin::load(str, this);
+
+    add_item(item);
+
+    return item;
 }
 
 bool App::give_item(const std::string& username, const std::string& name)

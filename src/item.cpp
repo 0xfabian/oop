@@ -1,40 +1,57 @@
 #include "item.h"
+#include "app.h"
 
-std::ostream& operator <<(std::ostream& os, Item& item)
+using namespace std;
+
+void Skin::print(ostream& os) const
 {
-    if (item.type == ItemType::SKIN)
-    {
-        Skin& skin = dynamic_cast<Skin&>(item);
-
-        os << skin;
-    }
-    else
-        os << item.name;
-
-    return os;
-}
-
-std::ostream& operator <<(std::ostream& os, Skin& skin)
-{
-    // fix unused warning
-    (void)skin.weapon;
-    (void)skin.wear;
-    (void)skin.pattern;
+    // fix unused variables
+    (void)weapon;
+    (void)wear;
+    (void)pattern;
 
     rlutil::saveDefaultColor();
 
-    switch (skin.rarity)
+    switch (rarity)
     {
-    case 1: rlutil::setColor(rlutil::LIGHTBLUE); break;
-    case 2: rlutil::setColor(rlutil::MAGENTA); break;
-    case 3: rlutil::setColor(rlutil::LIGHTMAGENTA); break;
-    case 4: rlutil::setColor(rlutil::LIGHTRED); break;
-    case 5: rlutil::setColor(rlutil::YELLOW); break;
+    case 1: rlutil::setColor(rlutil::LIGHTBLUE);        break;
+    case 2: rlutil::setColor(rlutil::MAGENTA);          break;
+    case 3: rlutil::setColor(rlutil::LIGHTMAGENTA);     break;
+    case 4: rlutil::setColor(rlutil::LIGHTRED);         break;
+    case 5: rlutil::setColor(rlutil::YELLOW);           break;
     }
 
-    os << skin.name;
+    os << name;
 
     rlutil::resetColor();
+}
 
-    return os;
+Item* Weapon::load(const string& str, App* app)
+{
+    vector<string> args = parse(str);
+
+    if (args.size() == 1 && !app->get_item(str))
+        return new Weapon(str);
+
+    return nullptr;
+}
+
+Item* Skin::load(const string& str, App* app)
+{
+    vector<string> args = parse(str);
+
+    if (args.size() == 3)
+    {
+        Weapon* weapon = dynamic_cast<Weapon*>(app->get_item(args[1]));
+
+        if (weapon && !app->get_item(args[1] + " | " + args[0]))
+        {
+            int rarity;
+
+            if (nxstoi(args[2], rarity))
+                return new Skin(weapon, args[0], rarity);
+        }
+    }
+
+    return nullptr;
 }

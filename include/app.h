@@ -6,6 +6,7 @@
 #include "market.h"
 #include "item.h"
 #include "user.h"
+#include "misc.h"
 
 class App
 {
@@ -19,9 +20,9 @@ public:
 
     App() = default;
 
-    bool is_active_user() { return active_user != nullptr; };
-    User& get_active_user() { return *active_user; };
-    Market& get_market() { return market; };
+    bool is_active_user() { return active_user != nullptr; }
+    User& get_active_user() { return *active_user; }
+    Market& get_market() { return market; }
     User* get_user(const std::string& name);
     Item* get_item(const std::string& name);
 
@@ -31,7 +32,8 @@ public:
     void logout();
 
     int load_items(const std::string& path = "items.txt");
-    bool add_item(const std::string& name);
+    void add_item(Item* item);
+    bool add_item(const std::string& str);
     bool give_item(const std::string& username, const std::string& name);
 
     void print_users();

@@ -3,7 +3,9 @@
 #include <rlutil.h>
 #include <functional>
 #include <unordered_map>
+
 #include "app.h"
+#include "misc.h"
 
 class Console
 {
@@ -38,9 +40,5 @@ public:
     void set_market_res(const std::vector<MarketEntry*>& _market_res) { market_res = _market_res; }
 };
 
-std::vector<std::string> parse(const std::string& input);
-
 void print_error(const std::string& str);
 void print_use(const std::string& str);
-
-bool nxstoi(const std::string& s, int& value) noexcept;
