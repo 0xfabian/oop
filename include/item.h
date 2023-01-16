@@ -88,7 +88,7 @@ class Case: public Item
 
 public:
 
-    Case(const std::string _name, std::vector<Skin*> _drops): Item(ItemType::CASE, _name + " Case"), drops(_drops) {}
+    Case(const std::string& _name, const std::vector<Skin*>& _drops): Item(ItemType::CASE, _name + " Case"), drops(_drops) {}
 
     Item* clone() const override { return new Case(*this); }
 

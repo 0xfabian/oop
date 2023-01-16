@@ -11,7 +11,7 @@ void Market::list_item(Item* item, int price)
         entries.push_back(new MarketEntry(item, price));
 }
 
-bool Market::cancel_item(Item* item)
+bool Market::cancel_item(const Item* item)
 {
     for (const auto& entry : entries)
         if (entry->get_item() == item)
@@ -65,7 +65,7 @@ std::vector<MarketEntry*> Market::find(const std::string& item_name)
     return result;
 }
 
-MarketEntry* Market::find(Item* item)
+MarketEntry* Market::find(const Item* item)
 {
     for (const auto& entry : entries)
         if (entry->get_item() == item)

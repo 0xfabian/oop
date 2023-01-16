@@ -281,7 +281,7 @@ void cmd_open(App* app, const vector<string>& args)
                 Case* _case = dynamic_cast<Case*>(item_res[id - 1]);
 
                 if (!_case)
-                    cout << "You can only you open on a case\n";
+                    cout << "You can only use open on a case\n";
                 else
                 {
                     if (app->get_market().find(_case))

@@ -7,6 +7,7 @@ std::vector<std::string> parse(const std::string& input)
     std::string word;
     bool in_word = false;
     bool in_quotes = false;
+    bool escape = false;
 
     for (const char& c : input)
     {
@@ -15,6 +16,13 @@ std::vector<std::string> parse(const std::string& input)
             if (in_quotes)
             {
                 in_word = true;
+
+                if (escape)
+                {
+                    escape = false;
+                    word.push_back('\\');
+                }
+
                 word.push_back(c);
             }
             else if (in_word)
@@ -26,11 +34,22 @@ std::vector<std::string> parse(const std::string& input)
         }
         else
         {
-            if (c == '"')
+            if (c == '"' && !escape)
                 in_quotes = !in_quotes;
+            else if (c == '\\' && !escape && in_quotes)
+                escape = true;
             else
             {
                 in_word = true;
+
+                if (escape)
+                {
+                    escape = false;
+
+                    if (c != '"' && c != '\\')
+                        word.push_back('\\');
+                }
+
                 word.push_back(c);
             }
         }
