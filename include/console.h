@@ -40,5 +40,6 @@ public:
     void set_market_res(const std::vector<MarketEntry*>& _market_res) { market_res = _market_res; }
 };
 
-void print_error(const std::string& str);
 void print_use(const std::string& str);
+bool check_id(const std::string& str, int& id, size_t max);
+bool check_price(const std::string& name, const std::string& str, int& value, int min = 0);

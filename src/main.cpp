@@ -9,9 +9,16 @@ int main()
 {
     srand((unsigned)time(nullptr));
 
-    App app;
-    Console& con = Console::get_instance();
+    try
+    {
+        App app;
+        Console& con = Console::get_instance();
 
-    con.link(&app);
-    con.run();
+        con.link(&app);
+        con.run();
+    }
+    catch (const app_error& e)
+    {
+        e.print();
+    }
 }

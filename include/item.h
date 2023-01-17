@@ -15,7 +15,8 @@ enum ItemType
 {
     WEAPON,
     SKIN,
-    CASE
+    CASE,
+    MAX_TYPE
 };
 
 class Item
@@ -31,7 +32,11 @@ protected:
 
 public:
 
-    Item(ItemType _type, const std::string& _name): type(_type), name(_name) {}
+    Item(ItemType _type, const std::string& _name): type(_type), name(_name)
+    {
+        if (type < 0 || type >= ItemType::MAX_TYPE)
+            throw app_error("tried to construct an item with invalid type");
+    }
 
     virtual Item* clone() const = 0;
 

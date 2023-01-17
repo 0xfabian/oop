@@ -119,9 +119,7 @@ void cmd_balance(App* app, const vector<string>& args)
         {
             int amount;
 
-            if (!nxstoi(args[2], amount) || amount < 1)
-                print_error("invalid amount");
-            else
+            if (check_price("amount", args[2], amount))
                 app->get_active_user().add_balance(amount);
         }
         else
@@ -173,11 +171,7 @@ void cmd_sell(App* app, const vector<string>& args)
             int id;
             int price;
 
-            if (!nxstoi(args[1], id) || id < 1 || id >(int)item_res.size())
-                print_error("invalid index");
-            else if (!nxstoi(args[2], price) || price < 0)
-                print_error("invalid price");
-            else
+            if (check_id(args[1], id, item_res.size()) && check_price("price", args[2], price))
             {
                 Item* ip = item_res[id - 1];
                 app->get_active_user().sell(ip, price);
@@ -227,9 +221,7 @@ void cmd_buy(App* app, const vector<string>& args)
         {
             int id;
 
-            if (!nxstoi(args[1], id) || id < 1 || id >(int)market_res.size())
-                print_error("invalid index");
-            else
+            if (check_id(args[1], id, market_res.size()))
             {
                 MarketEntry* entry = market_res[id - 1];
 
@@ -274,9 +266,7 @@ void cmd_open(App* app, const vector<string>& args)
         {
             int id;
 
-            if (!nxstoi(args[1], id) || id < 1 || id >(int)item_res.size())
-                print_error("invalid index");
-            else
+            if (check_id(args[1], id, item_res.size()))
             {
                 Case* _case = dynamic_cast<Case*>(item_res[id - 1]);
 
@@ -321,9 +311,7 @@ void cmd_cancel(App* app, const vector<string>& args)
         {
             int id;
 
-            if (!nxstoi(args[1], id) || id < 1 || id >(int)item_res.size())
-                print_error("invalid index");
-            else
+            if (check_id(args[1], id, item_res.size()))
             {
                 Item* item = item_res[id - 1];
 
@@ -366,6 +354,9 @@ Console::Console()
 
 void Console::run()
 {
+    if (!app)
+        throw app_error("tried to run the console with no app linked");
+
     while (!_quit)
     {
         if (app->is_active_user())
@@ -390,15 +381,6 @@ void Console::run()
     }
 }
 
-void print_error(const string& str)
-{
-    rlutil::setColor(rlutil::LIGHTRED);
-    cout << "error: ";
-
-    rlutil::resetColor();
-    cout << str << endl;
-}
-
 void print_use(const string& str)
 {
     rlutil::setColor(rlutil::YELLOW);
@@ -406,4 +388,60 @@ void print_use(const string& str)
 
     rlutil::resetColor();
     cout << str << endl;
+}
+
+bool check_id(const string& str, int& id, size_t max)
+{
+    try
+    {
+        id = std::stoi(str);
+    }
+    catch (const invalid_argument& e)
+    {
+        print_use("id should be a number");
+        return false;
+    }
+    catch (const out_of_range& e)
+    {
+        print_use("id is too big");
+        return false;
+    }
+
+    if (id < 1 || id >(int)max)
+    {
+        if (max == 1)
+            print_use("id can only be 1");
+        else
+            print_use("id should be between 1 and " + to_string(max));
+
+        return false;
+    }
+
+    return true;
+}
+
+bool check_price(const string& name, const string& str, int& value, int min)
+{
+    try
+    {
+        value = std::stoi(str);
+    }
+    catch (const invalid_argument& e)
+    {
+        print_use(name + " should be a number");
+        return false;
+    }
+    catch (const out_of_range& e)
+    {
+        print_use(name + " is too big");
+        return false;
+    }
+
+    if (value <= min)
+    {
+        print_use(name + " should be bigger than " + to_string(min));
+        return false;
+    }
+
+    return true;
 }
