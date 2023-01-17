@@ -42,4 +42,4 @@ public:
 
 void print_use(const std::string& str);
 bool check_id(const std::string& str, int& id, size_t max);
-bool check_price(const std::string& name, const std::string& str, int& value, int min = 0);
+bool check_value(const std::string& name, const std::string& str, int& value, int min = 0);

@@ -119,7 +119,7 @@ void cmd_balance(App* app, const vector<string>& args)
         {
             int amount;
 
-            if (check_price("amount", args[2], amount))
+            if (check_value("amount", args[2], amount))
                 app->get_active_user().add_balance(amount);
         }
         else
@@ -171,7 +171,7 @@ void cmd_sell(App* app, const vector<string>& args)
             int id;
             int price;
 
-            if (check_id(args[1], id, item_res.size()) && check_price("price", args[2], price))
+            if (check_id(args[1], id, item_res.size()) && check_value("price", args[2], price))
             {
                 Item* ip = item_res[id - 1];
                 app->get_active_user().sell(ip, price);
@@ -396,12 +396,12 @@ bool check_id(const string& str, int& id, size_t max)
     {
         id = std::stoi(str);
     }
-    catch (const invalid_argument& e)
+    catch (const invalid_argument&)
     {
         print_use("id should be a number");
         return false;
     }
-    catch (const out_of_range& e)
+    catch (const out_of_range&)
     {
         print_use("id is too big");
         return false;
@@ -420,18 +420,18 @@ bool check_id(const string& str, int& id, size_t max)
     return true;
 }
 
-bool check_price(const string& name, const string& str, int& value, int min)
+bool check_value(const string& name, const string& str, int& value, int min)
 {
     try
     {
         value = std::stoi(str);
     }
-    catch (const invalid_argument& e)
+    catch (const invalid_argument&)
     {
         print_use(name + " should be a number");
         return false;
     }
-    catch (const out_of_range& e)
+    catch (const out_of_range&)
     {
         print_use(name + " is too big");
         return false;
