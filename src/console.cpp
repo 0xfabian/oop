@@ -169,7 +169,7 @@ void cmd_sell(App* app, const vector<string>& args)
         if (!item_res.empty())
         {
             int id;
-            int price;
+            int price = 0;
 
             if (check_id(args[1], id, item_res.size()) && check_value("price", args[2], price))
             {
